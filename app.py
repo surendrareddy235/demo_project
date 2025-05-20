@@ -1,7 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-import sqlite3
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask
+from __init__.db import init_db
+from routes.loginroute import demo
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
-DATABASE = 'demo.db'
+
+app.register_blueprint(demo)
+
+
+with app.app_context():
+    init_db()
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
